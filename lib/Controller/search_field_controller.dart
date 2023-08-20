@@ -1,29 +1,46 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:search_from_list_getx/Model/movie.dart';
+import 'package:search_from_list_getx/View/search_text_field_view.dart';
 
 class SearchFieldController extends GetxController {
-  RxInt check = 10.obs;
+  //controller
+  TextEditingController movienamecontroller = TextEditingController();
+  TextEditingController releasecontroller = TextEditingController();
+  TextEditingController imageurlcontroller = TextEditingController();
 
-  RxString here = 'hello'.obs;
+  var displaylist = Movies.moviessList.obs;
 
-  void herefun(value) {
-    here = value;
+  void searching(String value) {
+    displaylist.value = Movies.moviessList
+        .where((element) =>
+            element.movieName.toLowerCase().contains(value.toLowerCase()))
+        .toList();
   }
 
-  RxList<Movies> displaylist = List<Movies>.from(Movies.moviessList).obs;
+  void deleting(index) {
+    displaylist.removeAt(index);
+  }
 
-  search(String value) {
-    displaylist = RxList.from(Movies.moviessList.where((element) =>
-        element.movieName.toLowerCase().contains(value.toLowerCase())));
+  void adding (){
+    displaylist.add(Movies(1, movienamecontroller.text, releasecontroller.text.to, ''));
+  }
 
-    // Movies.moviessList
-    //     .where((element) =>
-    //         element.movieName.toLowerCase().contains(value.toLowerCase()))
-    //     .toList();
-    print(displaylist.length);
-    displaylist.refresh();
-    return displaylist;
+  void reseting() {
+    displaylist.value = Movies.moviessList.obs;
+    Get.defaultDialog(
+        title: 'Add',
+        onCancel: () => Get.back(),
+        onConfirm: () => ,
+        content: Column(
+          children: [
+            tfield(movienamecontroller, 'Movie Name'),
+            tfield(releasecontroller, 'Releasing Year'),
+            tfield(imageurlcontroller, 'Image Url'),
+          ],
+          
+        ));
   }
 }
