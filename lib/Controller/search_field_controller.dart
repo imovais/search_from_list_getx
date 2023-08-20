@@ -13,34 +13,50 @@ class SearchFieldController extends GetxController {
 
   var displaylist = Movies.moviessList.obs;
 
-  void searching(String value) {
-    displaylist.value = Movies.moviessList
-        .where((element) =>
-            element.movieName.toLowerCase().contains(value.toLowerCase()))
-        .toList();
+  searching(String value) {
+    if (value.isEmpty) {
+      print('is empty');
+      return displaylist.value = Movies.moviessList;
+    } else {
+      return displaylist.value = displaylist
+          .where((element) =>
+              element.movieName.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    }
   }
 
   void deleting(index) {
     displaylist.removeAt(index);
   }
 
-  // void adding (){
-  //   displaylist.add(Movies(1, movienamecontroller.text, releasecontroller.text, ''));
-  // }
+  void adding() {
+    Movies.moviessList.add(Movies(1, movienamecontroller.text,
+        int.parse(releasecontroller.text), imageurlcontroller.text));
+    movienamecontroller.clear();
+    releasecontroller.clear();
+    imageurlcontroller.clear();
+    Get.back();
+    displaylist.refresh();
+  }
 
   void reseting() {
     displaylist.value = Movies.moviessList.obs;
+  }
+
+  // addform
+  void addform() {
     Get.defaultDialog(
         title: 'Add',
         onCancel: () => Get.back(),
-        // onConfirm: () => ,
+        onConfirm: () {
+          adding();
+        },
         content: Column(
           children: [
             tfield(movienamecontroller, 'Movie Name'),
             tfield(releasecontroller, 'Releasing Year'),
             tfield(imageurlcontroller, 'Image Url'),
           ],
-          
         ));
   }
 }

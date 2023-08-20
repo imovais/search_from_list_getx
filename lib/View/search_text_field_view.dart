@@ -20,7 +20,9 @@ class SearchTextField extends StatelessWidget {
                   IconButton(
                       onPressed: () => controller.reseting(),
                       icon: const Icon(Icons.refresh)),
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.add))
+                  IconButton(
+                      onPressed: () => controller.addform(),
+                      icon: const Icon(Icons.add))
                 ],
               ),
             )
@@ -79,6 +81,7 @@ Widget tfield(TextEditingController controller, String text) {
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
     decoration: BoxDecoration(border: Border.all(color: Colors.black)),
     child: TextField(
+      
       controller: controller,
       decoration: InputDecoration(
         isDense: false,
