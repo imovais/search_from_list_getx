@@ -24,16 +24,16 @@ class SearchFieldController extends GetxController {
     displaylist.removeAt(index);
   }
 
-  void adding (){
-    displaylist.add(Movies(1, movienamecontroller.text, releasecontroller.text.to, ''));
-  }
+  // void adding (){
+  //   displaylist.add(Movies(1, movienamecontroller.text, releasecontroller.text, ''));
+  // }
 
   void reseting() {
     displaylist.value = Movies.moviessList.obs;
     Get.defaultDialog(
         title: 'Add',
         onCancel: () => Get.back(),
-        onConfirm: () => ,
+        // onConfirm: () => ,
         content: Column(
           children: [
             tfield(movienamecontroller, 'Movie Name'),
